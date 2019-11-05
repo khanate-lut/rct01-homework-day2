@@ -1,19 +1,29 @@
-import React, { Component } from 'react';
-import FilmPoster from './FilmPoster';
+import React from "react";
+import FilmPoster from "./FilmPoster";
+import Fave from "./Fave";
 
-class FilmRow extends Component {
-  render() {
-    const year = new Date(this.props.film.release_date).getFullYear();
-    return(
-      <div className="film-row">
-        <FilmPoster posterPath={this.props.film.poster_path} />
-        <div className="film-summary">
-          <h1>{this.props.film.title}</h1>
-          <p>{year}</p>
-        </div>
-      </div>
-    )
+const FilmRow = props => {
+  const year = new Date(props.film.release_date).getFullYear();
+
+  const handleDetailsClick = (film) => {
+    console.log(film);
   }
-}
+
+  const handleCallBackFaveClick = (action) => {
+    console.log('FilmRow handleFaveClick');
+    props.callBackFilmListing(props.film);
+  }
+  return (
+
+    <div className="film-row" onClick={ () => handleDetailsClick(props.film) }>
+      <FilmPoster posterPath={props.film.poster_path} />
+      <div className="film-summary">
+        <h1>{props.film.title}</h1>
+        <p>{year}</p>
+      </div>
+      <Fave callBackFilmRow={ handleCallBackFaveClick } />
+    </div>
+  );
+};
 
 export default FilmRow;
